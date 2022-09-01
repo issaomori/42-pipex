@@ -1,0 +1,17 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    roteiro.txt                                        :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/09/01 10:05:28 by gissao-m          #+#    #+#              #
+#    Updated: 2022/09/01 10:10:32 by gissao-m         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+Este projeto tem como finalidade, o aprendizado de como fazer as pipes que
+utilizamos no terminal (shell).
+Preciso fazer com que o meu pipex tenha este comportamento '< infile cmd1 | cmd2 > outfile'
+mas para isso vou passar no terminal desta maneira ./pipex infile cmd1 cmd2 outfile
+o resultado dos dois precisa ser igual.
