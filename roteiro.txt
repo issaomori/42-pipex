@@ -6,7 +6,7 @@
 #    By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 10:05:28 by gissao-m          #+#    #+#              #
-#    Updated: 2022/09/01 14:17:58 by gissao-m         ###   ########.fr        #
+#    Updated: 2022/09/06 10:43:43 by gissao-m         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,3 +16,10 @@ Preciso fazer com que o meu pipex tenha este comportamento '< infile cmd1 | cmd2
 mas para isso vou passar no terminal as infos desta maneira './pipex infile cmd1 cmd2 outfile'
 o resultado dos dois precisa ser igual.
 
+Lendo sobre o fork descobri que o comando um será realizado pelo filho e o comando 2 será realizado pelo pai.
+Tambem da para fazer com 2 filhos e o pai ficará responsavel em supervisionar os filhos. Child1 cmd1 e Child2 cmd2.
+O pai aguardará a finalização.
+
+Com o comando ls -la /proc/$$/fd, eu posso checar o fd atual.
+
+O manual indica usar a split para obter o char **
