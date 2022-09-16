@@ -6,12 +6,13 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:22:19 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/16 14:33:54 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:23:54 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include <pipex.h>
+#include "pipex.h"
+#include <strings.h>
 // int main(int argc, char const *argv[], char **envp)
 // {
 //     char **matriz;
@@ -40,9 +41,11 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 	{
-		data = NULL;
+		data = malloc (sizeof(t_data) * 1);
+		//assim que maloca uma struct!
+		bzero(data, sizeof(t_data));
 		if (pipe(data->fd) == -1)
-			perror("Error: ");
+			perror("Error: aqui");
 			//alem de ser uma checagem de erro, essa condicao faz com que a func pipe ja seja executada.
 		pid1 = fork();
 		if (pid1 == 0)
@@ -58,32 +61,38 @@ int	main(int argc, char **argv, char **envp)
 void    child_process_cmd1(char **argv, char **env, t_data *data)
 {
 	data->infile = open(argv[1], O_RDONLY, 0777);
-	if (data->infile > 0)
+	if (data->infile < 0)
 		{
-			perror("Error: ");
+			perror("Error: vem");
 			close(data->infile);
 			exit(127);
 		}   
-	dup2(data->infile, STDIN_FILENO);
 	dup2(data->fd[1], STDOUT_FILENO);
+	dprintf(2, "%dfdin\n", data->fd[1]);
+	dup2(data->infile, STDIN_FILENO);
+	dprintf(2, "%dinfile\n", data->infile);
 	close(data->fd[0]);
-	data->cmd = matrix_block_cmd(argv[3]);
+	data->cmd = matrix_block_cmd(argv[2]);
+	data->path = find_the_path(data, env);
 	execve(data->path, data->cmd, env);
 }
 
 void    child_process_cmd2(char **argv, char **env, t_data *data)
 {
-	data->infile = open(argv[1], O_RDONLY, 0777);
-	if (data->infile > 0)
-		{
-			perror("Error: ");
-			close(data->infile);
-			exit(127);
-		}   
-	dup2(data->infile, STDIN_FILENO);
-	dup2(data->fd[1], STDOUT_FILENO);
-	close(data->fd[0]);
-	data->cmd = matrix_block_cmd(argv[4]);
+	data->outfile = open(argv[4], O_CREAT | O_WRONLY, 0777);
+	if (data->outfile < 0)
+	{
+		perror("Error: este");
+		close(data->outfile);
+		exit(127);
+	}   
+	dup2(data->fd[0], STDIN_FILENO);
+	dprintf(2, "%dfdout\n", data->fd[0]);
+	dup2(data->outfile, STDOUT_FILENO);
+	dprintf(2, "%doutfile\n", data->outfile);
+	close(data->fd[1]);
+	data->cmd = matrix_block_cmd(argv[3]);
+	data->path = find_the_path(data, env);
 	execve(data->path, data->cmd, env);
 }
 
@@ -127,17 +136,20 @@ char    *find_the_path(t_data *data, char **path_env)
 	char	*path;
 	char	*row;
 	char	**matrix;
+	char	*temp;
 
 	count = 0;
-	while (path_env[count][0] != 'P' || path_env[count][1] != 'A'|| 
-	path_env[count][2] != 'T' || path_env[count][3] != 'H')
+	while (ft_strncmp(path_env[count],"PATH", 4))
 		count++;
 	row = path_env[count] + 5;
 	matrix = ft_split(row, ':');
+
 	count = 0;
 	while (matrix[count] != 0)
 	{
-		path = ft_strjoin(matrix[count], data->cmd[0]);
+		temp = ft_strjoin(matrix[count], "/");
+		path = ft_strjoin(temp, data->cmd[0]);
+		free (temp);
 		if (access(path, F_OK | X_OK) == 0)
 		{
 			free_matrix(matrix);
@@ -168,22 +180,6 @@ void	invalid_path(char **check, t_data *data)
 	free_matrix(data->cmd);
 	free(data);
 }
-
-// int     strchr_mod (char *str, int c)
-// {
-//     int count_size;
-//     int lenght;
-
-//     count_size = 0;
-//     lenght = ft_strlen(str);
-//     while (lenght >= 0)
-//     {
-//         if (str[lenght] == (unsigned char)c)
-//             count_size++;
-//         lenght--;
-//     }
-//     return(count_size);
-// }
 
 int     count_find (char *str_cmd)
 {
@@ -267,8 +263,8 @@ char    **matrix_block_cmd(char *cmd)
 	int     count;
 	
 	count = 0;
-	if (count_find(cmd) % 2 == 0)
-		write(2, "Error: ", 7);
+	if (count_find(cmd) % 2 != 0)
+		write(2, "Error: sera", 7);
 	else
 	{
 		while (cmd[count] && cmd[count] != '\'')

@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 21:21:49 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/14 11:42:59 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/16 16:07:25 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	while (s1[++count_s1] != '\0')
 		join[count_s1] = s1[count_s1];
-    join[count_s1] = '/';
 	while (s2[++count_s2] != '\0')
 		join[count_s1 + count_s2] = s2[count_s2];
 	join[count_s1 + count_s2] = '\0';
@@ -46,4 +45,18 @@ int	ft_strlen(const char *str)
 	while (str[count_size])
 		count_size++;
 	return (count_size);
+}
+
+int	ft_strncmp(const char *str1, const char *str2, size_t n)
+{
+	size_t	count;
+
+	count = 0;
+	while (count < n && (str1[count] != '\0' || str2[count] != '\0'))
+	{
+		if ((unsigned char)str1[count] != (unsigned char)str2[count])
+			return ((unsigned char)str1[count] - (unsigned char)str2[count]);
+		count++;
+	}
+	return (0);
 }
