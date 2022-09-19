@@ -6,12 +6,21 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 21:20:07 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/08 11:07:11 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:20:46 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+void	free_matrix(char **s)
+{
+	int	count;
+
+	count = 0;
+	while (s[count] != NULL)
+		free(s[count++]);
+	free(s);
+}
 
 static char	*ft_strncpy(char *dst, const char *src, size_t n)
 {
