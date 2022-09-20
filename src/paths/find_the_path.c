@@ -6,25 +6,34 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:13:43 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/19 17:19:19 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/20 10:18:48 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*find_the_path(t_data *data, char **path_env)
+char	**find_env(char **path_env)
 {
 	int		count;
-	char	*path;
-	char	*row;
 	char	**matrix;
-	char	*temp;
+	char	*row;
 
 	count = 0;
 	while (ft_strncmp(path_env[count], "PATH", 4))
 		count++;
 	row = path_env[count] + 5;
 	matrix = ft_split(row, ':');
+	return (matrix);
+}
+
+char	*find_the_path(t_data *data, char **path_env)
+{
+	int		count;
+	char	*path;
+	char	**matrix;
+	char	*temp;
+
+	matrix = find_env(path_env);
 	count = 0;
 	while (matrix[count] != 0)
 	{

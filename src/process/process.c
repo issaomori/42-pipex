@@ -6,11 +6,23 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 16:47:55 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/19 18:18:51 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:05:26 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	execve_error(t_data *data, char **env)
+{
+	if (execve(data->path, data->cmd, env) == -1)
+	{
+		perror("Error:");
+		free(data->path);
+		free_matrix(data->cmd);
+		free(data);
+		exit (127);
+	}
+}
 
 void	child_process_cmd1(char **argv, char **env, t_data *data)
 {
@@ -20,7 +32,7 @@ void	child_process_cmd1(char **argv, char **env, t_data *data)
 	data->infile = open(argv[1], O_RDONLY, 0777);
 	if (data->infile < 0)
 	{
-		perror("Error: vem");
+		perror("Error:");
 		close(data->infile);
 		exit(127);
 	}
@@ -38,14 +50,7 @@ void	child_process_cmd1(char **argv, char **env, t_data *data)
 		free (temp);
 		i++;
 	}
-	if (execve(data->path, data->cmd, env) == -1)
-	{
-		perror("Error");
-		free(data->path);
-		free_matrix(data->cmd);
-		free(data);
-		exit (127);
-	}
+	execve_error(data, env);
 }
 
 void	child_process_cmd2(char **argv, char **env, t_data *data)
@@ -56,7 +61,7 @@ void	child_process_cmd2(char **argv, char **env, t_data *data)
 	data->outfile = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (data->outfile < 0)
 	{
-		perror("Error: este");
+		perror("Error:");
 		close(data->outfile);
 		exit(127);
 	}
@@ -74,14 +79,7 @@ void	child_process_cmd2(char **argv, char **env, t_data *data)
 		free (temp);
 		i++;
 	}
-	if (execve(data->path, data->cmd, env) == -1)
-	{
-		perror("Error");
-		free(data->path);
-		free_matrix(data->cmd);
-		free(data);
-		exit(127);
-	}
+	execve_error(data, env);
 }
 
 int	parent_process(int *fd, int pid1, int pid2)
@@ -100,6 +98,3 @@ int	parent_process(int *fd, int pid1, int pid2)
 	}
 	return (0);
 }
-
-//for(int i = 0;data->cmd[i];i++)
-// for(int i = 0;data->cmd[i];i++)

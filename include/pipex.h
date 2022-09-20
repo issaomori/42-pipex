@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:22:23 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/19 18:17:01 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/20 10:57:22 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 size_t	ft_strlcpy(char *dst, const char *src, size_t d_size);
 char	*ft_strdup(const char *src);
 void	ft_bzero(void *str, size_t n);
+void	allow_access(char **argv, char **envp);
 
 #endif
