@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 16:47:55 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/21 10:16:07 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/21 11:15:30 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,24 @@ void	child_process_cmd2(char **argv, char **env, t_data *data)
 	execve_error(data, env);
 }
 
-void	parent_process(int *fd, int pid1, int pid2)
+void	parent_process(t_data *data, int pid1, int pid2)
 {
 	int	wstatus;
 	int	status_code;
 
-	close(fd[0]);
-	close(fd[1]);
+	close(data->fd[0]);
+	close(data->fd[1]);
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, &wstatus, 0);
 	if (WIFEXITED(wstatus))
 	{
 		status_code = WEXITSTATUS(wstatus);
+		free(data);
 		exit (status_code);
 	}
 }
+
+// void	free_data(t_data *data)
+// {
+	
+// }
