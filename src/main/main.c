@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:22:19 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/21 11:15:11 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/21 11:19:00 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,8 @@ void	error_check(int argc)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data data;
-
-	data.exit = 0;
 	if (argc != 5)
 		error_check(argc);
 	allow_access(argv, envp);
-	return (data.exit);
+	return (0);
 }
