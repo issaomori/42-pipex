@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 16:47:55 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/21 11:17:56 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/21 12:39:22 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,3 @@ void	parent_process(t_data *data, int pid1, int pid2)
 		exit (status_code);
 	}
 }
-
