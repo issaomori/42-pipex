@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 16:47:55 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/20 11:05:26 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/21 10:16:07 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	execve_error(t_data *data, char **env)
 {
 	if (execve(data->path, data->cmd, env) == -1)
 	{
-		perror("Error:");
+		perror("Error");
 		free(data->path);
 		free_matrix(data->cmd);
 		free(data);
@@ -32,8 +32,7 @@ void	child_process_cmd1(char **argv, char **env, t_data *data)
 	data->infile = open(argv[1], O_RDONLY, 0777);
 	if (data->infile < 0)
 	{
-		perror("Error:");
-		close(data->infile);
+		perror("Error");
 		exit(127);
 	}
 	dup2(data->fd[1], STDOUT_FILENO);
@@ -61,8 +60,7 @@ void	child_process_cmd2(char **argv, char **env, t_data *data)
 	data->outfile = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (data->outfile < 0)
 	{
-		perror("Error:");
-		close(data->outfile);
+		perror("Error");
 		exit(127);
 	}
 	dup2(data->fd[0], STDIN_FILENO);
@@ -82,7 +80,7 @@ void	child_process_cmd2(char **argv, char **env, t_data *data)
 	execve_error(data, env);
 }
 
-int	parent_process(int *fd, int pid1, int pid2)
+void	parent_process(int *fd, int pid1, int pid2)
 {
 	int	wstatus;
 	int	status_code;
@@ -94,7 +92,6 @@ int	parent_process(int *fd, int pid1, int pid2)
 	if (WIFEXITED(wstatus))
 	{
 		status_code = WEXITSTATUS(wstatus);
-		return (status_code);
+		exit (status_code);
 	}
-	return (0);
 }

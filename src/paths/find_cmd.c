@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 17:12:31 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/19 17:54:38 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/20 13:54:18 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**matrix_block_cmd(char *cmd)
 
 	count = 0;
 	if (count_find(cmd) % 2 != 0)
-		write(2, "Error: sera", 7);
+		write(2, "Error:", 7);
 	else
 	{
 		while (cmd[count] && cmd[count] != '\'')

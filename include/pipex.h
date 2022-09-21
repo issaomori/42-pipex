@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:22:23 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/20 10:57:22 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:37:22 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_data
 	int		infile;
 	int		outfile;
 	int		fd[2];
+	int		exit;
 }	t_data;
 
 void	error_check(int argc);
@@ -40,7 +41,7 @@ void	invalid_path(char **check, t_data *data);
 int		count_find(char *str_cmd);
 char	**matrix_cmd(char *cmd);
 char	**matrix_block_cmd(char *cmd);
-int		parent_process(int *fd, int pid1, int pid2);
+void	parent_process(int *fd, int pid1, int pid2);
 void	child_process_cmd1(char **argv, char **env, t_data *data);
 void	child_process_cmd2(char **argv, char **env, t_data *data);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);

@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:22:19 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/20 11:04:48 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/21 10:22:03 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ void	allow_access(char **argv, char **envp)
 
 	if (access(argv[1], F_OK) != 0)
 	{	
-		perror("Error: NAO EXISTE");
-		exit (127);
+		open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+		perror("Error");
+		exit (1);
 	}
 	data = malloc (sizeof(t_data) * 1);
 	ft_bzero(data, sizeof(t_data));
 	if (pipe(data->fd) == -1)
-		perror("Error: aqui");
+		perror("Error");
 	pid1 = fork();
 	if (pid1 == 0)
 		child_process_cmd1(argv, envp, data);
@@ -40,17 +41,20 @@ void	allow_access(char **argv, char **envp)
 void	error_check(int argc)
 {
 	if (argc < 5)
-		write(2, "ERROR\nToo few arguments.\n", 26);
+		write(2, "Error\nToo few arguments.\n", 26);
 	if (argc > 5)
-		write(2, "ERROR\nToo many arguments.\n", 27);
-	write(2, "Try again with: ./pipex <file1> <cmd1> <cmd2> file2\n", 53);
-	exit(0);
+		write(2, "Error\nToo many arguments.\n", 27);
+	write(1, "Try again with: ./pipex <file1> <cmd1> <cmd2> file2\n", 53);
+	exit(1);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_data data;
+
+	data.exit = 0;
 	if (argc != 5)
 		error_check(argc);
 	allow_access(argv, envp);
-	return (0);
+	return (data.exit);
 }
