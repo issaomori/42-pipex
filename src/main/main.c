@@ -6,7 +6,7 @@
 /*   By: gissao-m <gissao-m@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 12:22:19 by gissao-m          #+#    #+#             */
-/*   Updated: 2022/09/21 11:19:00 by gissao-m         ###   ########.fr       */
+/*   Updated: 2022/09/23 13:21:29 by gissao-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	allow_access(char **argv, char **envp)
 	if (pid2 == 0)
 		child_process_cmd2(argv, envp, data);
 	parent_process(data, pid1, pid2);
-	free(data);
 }
 
 void	error_check(int argc)
